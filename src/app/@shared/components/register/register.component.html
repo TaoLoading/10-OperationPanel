@@ -1,0 +1,75 @@
+<div class="da-register" style="background-image: url('assets/img/background/img_log.png'); background-repeat: no-repeat; background-position: center;">
+  <d-toast [value]="toastMessage"></d-toast>
+  <div class="da-register-form">
+    <div class="da-register-logo-wrapper">
+      <div class="da-register-logo">
+        <span class="da-logo-devui">
+          <img src="assets/devui-logo.svg" alt="DevUI-Logo" />
+        </span>
+        <span class="da-text">DevUI</span>
+      </div>
+      <span class="da-coperation">
+        DevUI Design 出品
+      </span>
+    </div>
+    <div class="da-register-wrapper">
+      <form dForm [layout]="verticalLayout" (dSubmit)="register($event)" [labelSize]="'sm'" ngForm>
+        <d-form-item>
+          <d-form-label [required]="true">
+            邮箱:
+          </d-form-label>
+          <d-form-control>
+            <div>
+              <input dTextInput autocomplete="off" name="userEmail" placeholder="Email" [(ngModel)]="formData.email"  [dValidateRules]="formRules.emailRules" />
+            </div>
+          </d-form-control>
+        </d-form-item>
+        <d-form-item>
+          <d-form-label [required]="true">
+            密码:
+          </d-form-label>
+          <d-form-control [suffixTemplate]="suffixTemplate">
+            <input
+              dTextInput
+              dValidateSyncKey="password"
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              placeholder="Password"
+              [(ngModel)]="formData.password"
+              [dValidateRules]="formRules.passwordRules"
+            />
+          </d-form-control>
+        </d-form-item>
+        <d-form-item>
+          <d-form-label [required]="true">
+            确认密码:
+          </d-form-label>
+          <d-form-control [suffixTemplate]="suffixTemplate2">
+            <input
+              dTextInput
+              dValidateSyncKey="password"
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              [(ngModel)]="formData.confirmPassword"
+              [dValidateRules]="formRules.confirmPasswordRules"
+            />
+          </d-form-control>
+        </d-form-item>
+        <button class="da-submit-button" dFormSubmit>
+          注册
+        </button>
+        <a class="da-other" routerLink="/login">
+          使用已有账号登录
+        </a>
+      </form>
+    </div>
+  </div>
+  <da-footer></da-footer>
+</div>
+<ng-template #suffixTemplate>
+  <i [class]="showPassword ? 'icon icon-preview' : 'icon icon-preview-forbidden'" (click)="showPassword = !showPassword"></i>
+</ng-template>
+<ng-template #suffixTemplate2>
+  <i [class]="showConfirmPassword ? 'icon icon-preview' : 'icon icon-preview-forbidden'" (click)="showConfirmPassword = !showConfirmPassword"></i>
+</ng-template>
