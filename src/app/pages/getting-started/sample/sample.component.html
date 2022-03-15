@@ -21,10 +21,58 @@
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24" [daXs]="24">
       <div class="da-content-card">
-        <p>
-          恭喜你，你已经成功搭建了一个 DevUI Admin 项目。更多的使用信息请参考：<a href="https://devui.design/admin-page/docs" target="_blank">DevUI
-            Admin 官方文档</a>
-        </p>
+
+        <!-- 抽屉 -->
+        <d-button (click)="openDrawer()">打开查询插件</d-button>
+        <ng-template #drawerContent>
+          <div [style.margin]="'20px 20px 0 0'" [style.text-align]="'right'" [style.cursor]="'pointer'">
+            <span (click)="close($event)" title="Close" class="icon icon-close"></span>
+          </div>
+          <!-- 抽屉内容 -->
+          <div [style.margin]="'20px 20px 0 20px'">
+            <!-- <div>Hello, Drawer!</div> -->
+            <div style="margin-bottom: 10px" nz-col nzSpan="24" *ngFor="let val of selectList">
+              <d-checkbox [label]="val.name" [isShowTitle]="false" (change)="selectItemChange(val)"
+                [(ngModel)]="val.check">
+              </d-checkbox>
+            </div>
+          </div>
+        </ng-template>
+
+        <!-- 可自定义大屏 -->
+        <d-button [bsStyle]="'danger'" (btnClick)="editorWidget()" [style.float]="'right'">编辑模块</d-button>
+        <d-button [bsStyle]="'common'" (btnClick)="saveEditor()" *ngIf="canEditor" [style.float]="'right'">
+          保存编辑
+        </d-button>
+        <!-- <d-button (btnClick)="addWidget()">添加模块</d-button>
+        <d-button [bsStyle]="'common'" (btnClick)="deleteWidget(widgets.length - 1)">删除模块</d-button> -->
+        <div>
+          <d-dashboard #dashboard="dDashboard" class="dashboard" [ngClass]="canEditor==true ? 'arrow_box' : ''">
+            <d-dashboard-widget *ngFor="let widget of widgets; let index = index" [(x)]="widget.x" [(y)]="widget.y"
+              [(width)]="widget.width" [(height)]="widget.height" [minWidth]="widget.minWidth"
+              [minHeight]="widget.minHeight" [maxWidth]="widget.maxWidth" [maxHeight]="widget.maxHeight"
+              [locked]="widget.locked" [noMove]="widget.noMove || widget.locked"
+              [noResize]="widget.noResize || widget.locked" [autoPosition]="widget.autoPosition" class="widget">
+              <span>
+                <div class="index">{{ index + 1 }}</div>
+                <div class="content">
+                  <div>
+                    <div>
+                      <span>坐标</span><span class="coordinate">{{ widget.x }} , {{ widget.y }}</span>
+                    </div>
+                    <div>
+                      <span>宽 & 高</span><span class="size">{{ widget.width }} x {{ widget.height }}</span>
+                    </div>
+                    <div *ngIf="widget.locked"><span>固定形态</span></div>
+                    <div *ngIf="widget.noMove"><span>禁止移动</span></div>
+                    <div *ngIf="widget.noResize"><span>禁止变形</span></div>
+                  </div>
+                </div>
+              </span>
+            </d-dashboard-widget>
+          </d-dashboard>
+        </div>
+
       </div>
     </da-col-item>
   </da-layout-row>

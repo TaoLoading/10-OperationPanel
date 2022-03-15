@@ -23,8 +23,10 @@ import {
   RadioModule,
   BreadcrumbModule,
   ModalModule,
+  CheckBoxModule
 } from 'ng-devui';
 import { I18nModule } from 'ng-devui/i18n';
+import { DashboardModule } from 'ng-devui/dashboard';
 
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -52,6 +54,8 @@ const DEVUI_MODULES = [
   DrawerModule,
   BreadcrumbModule,
   RadioModule,
+  CheckBoxModule,
+  DashboardModule,
   ModalModule
 ];
 const COMPONENTS = [
