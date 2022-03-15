@@ -42,7 +42,8 @@ export class SampleComponent implements OnInit, AfterViewInit {
   // 存放查询数据的数组
   searchArr = [];
   // 大屏模块数据
-  widgets: Array<DashboardWidget> = [
+  widgets: Array<DashboardWidget> = [];
+  falseWidgets: Array<DashboardWidget> = [
     {
       x: 0,
       y: 0,
@@ -92,10 +93,24 @@ export class SampleComponent implements OnInit, AfterViewInit {
       flag: 5
     }
   ];
+  // 是否可编辑模块
   canEditor: boolean = false;
   constructor(private drawerService: DrawerService, private toastService: ToastService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    // 从localStorage中读取仪表盘布局
+    this.widgets = JSON.parse(localStorage.getItem('widgets'));
+    if (!this.widgets) {
+      this.widgets = this.falseWidgets;
+      this.toastService.open({
+        value: [{ severity: 'info', summary: '当前仪表盘布局数据为假数据' }],
+      });
+    } else {
+      this.toastService.open({
+        value: [{ severity: 'success', summary: '当前仪表盘布局数据为localStorage中的数据' }],
+      });
+    }
+  }
 
   ngAfterViewInit(): void {
     window.dispatchEvent(new Event('resize'));
@@ -161,7 +176,8 @@ export class SampleComponent implements OnInit, AfterViewInit {
       const element = this.widgets[index];
       element['locked'] = true;
     }
-    console.log('当前模块具体坐标为', this.widgets)
+    // 存储当前布局到localStorage
+    localStorage.setItem('widgets', JSON.stringify(this.widgets))
   }
 
   // 增加模块
