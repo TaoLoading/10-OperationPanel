@@ -23,6 +23,7 @@ import {
   RadioModule,
   BreadcrumbModule,
   ModalModule,
+  CardModule,
   CheckBoxModule
 } from 'ng-devui';
 import { I18nModule } from 'ng-devui/i18n';
@@ -55,6 +56,7 @@ const DEVUI_MODULES = [
   BreadcrumbModule,
   RadioModule,
   CheckBoxModule,
+  CardModule,
   DashboardModule,
   ModalModule
 ];

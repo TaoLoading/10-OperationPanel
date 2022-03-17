@@ -1,0 +1,82 @@
+@import '~ng-devui/styles-var/devui-var.scss';
+
+// 外层抽屉样式
+input[type='text'] {
+  width: 300px;
+  height: 32px;
+  box-sizing: border-box;
+  padding: 4px 8px;
+  font-size: $devui-font-size;
+  color: $devui-text;
+  vertical-align: middle;
+  border: 1px solid $devui-dividing-line;
+  border-radius: $devui-border-radius;
+  outline: none;
+  background-color: $devui-base-bg;
+}
+.list-group-item {
+  border-bottom: 1px solid $devui-dividing-line;
+  padding: 16px 24px;
+}
+.operation-area {
+  margin: 16px 24px;
+
+  d-button {
+    margin-top: 16px;
+  }
+}
+
+// 内层卡片样式
+.card-icon {
+  cursor: pointer;
+  font-size: $devui-font-size-icon;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.card-icon + span {
+  vertical-align: middle;
+}
+d-card {
+  transition:
+    box-shadow $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+    transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+
+  &:hover {
+    box-shadow: $devui-shadow-length-hover $devui-light-shadow;
+    transform: translateY(-5px);
+  }
+}
+.devui-card {
+  padding: 0;
+}
+.card-container {
+  padding-top: 15px;
+  position: relative;
+  width: 251px;
+  height: 180px;
+}
+d-card-content ul li {
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 13px;
+  color: #8B8B8B;
+}
+d-card-actions {
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #E9E9E9;
+}
+.card-block {
+  cursor: pointer;
+  width: 125px;
+  height: 30px;
+  margin: 0;
+  text-align: center;
+  line-height: 30px;
+  color: #8B8B8B;
+  background-color: #FAFAFA;
+}
+.border-left {
+  border-right: 1px solid #E9E9E9;
+}

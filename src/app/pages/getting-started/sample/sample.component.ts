@@ -4,6 +4,7 @@ import { DashboardWidget } from 'ng-devui/dashboard';
 import { ToastService } from 'ng-devui/toast';
 import { DialogService } from 'ng-devui/modal';
 import { CreatePluginComponent } from './create-plugin/create-plugin.component'
+import { SearchPluginComponent } from './search-plugin/search-plugin.component'
 
 @Component({
   selector: 'app-sample',
@@ -105,6 +106,7 @@ export class SampleComponent implements OnInit, AfterViewInit {
   constructor(private drawerService: DrawerService, private toastService: ToastService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
+    this.openLookPlugin();
     // 从localStorage中读取仪表盘布局
     this.widgets = JSON.parse(localStorage.getItem('widgets'));
     if (!this.widgets) {
@@ -200,11 +202,6 @@ export class SampleComponent implements OnInit, AfterViewInit {
     this.widgets.splice(i, 1);
   }
 
-  // 打开查看插件抽屉
-  openLookPlugin() {
-    console.log('点击了查看插件')
-  }
-
   // 打开添加插件弹窗
   openCreatePlugin(dialogtype?: string) {
     const results = this.dialogService.open({
@@ -242,5 +239,30 @@ export class SampleComponent implements OnInit, AfterViewInit {
     const chart = document.getElementsByClassName("widget")[0].children[0].children[0];
     this.width = chart.parentElement.offsetWidth;
     this.height = chart.parentElement.offsetHeight;
+  }
+
+  // 打开查看插件抽屉
+  openLookPlugin() {
+    this.results = this.drawerService.open({
+      drawerContentComponent: SearchPluginComponent,
+      width: '300px',
+      zIndex: 1000,
+      isCover: true,
+      fullScreen: true,
+      backdropCloseable: true,
+      escKeyCloseable: true,
+      position: 'left',
+      onClose: () => { },
+      data: {
+        text: 'hello',
+        name: 'tom1',
+        close: (event) => {
+          this.results.drawerInstance.hide();
+        },
+        fullScreen: (event) => {
+          this.results.drawerInstance.toggleFullScreen();
+        }
+      }
+    })
   }
 }

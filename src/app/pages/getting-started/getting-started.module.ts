@@ -6,9 +6,10 @@ import { GettingStartedComponent } from './getting-started.component';
 import { GettingStartedRoutingModule } from './getting-started-routing.module';
 import { Charts1Component } from './sample/charts1/charts1.component';
 import { CreatePluginComponent } from './sample/create-plugin/create-plugin.component';
+import { SearchPluginComponent } from './sample/search-plugin/search-plugin.component';
 
 @NgModule({
-  declarations: [GettingStartedComponent, SampleComponent, Charts1Component, CreatePluginComponent],
+  declarations: [GettingStartedComponent, SampleComponent, Charts1Component, CreatePluginComponent, SearchPluginComponent],
   imports: [SharedModule, GettingStartedRoutingModule],
   providers: [],
 })

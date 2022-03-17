@@ -1,0 +1,26 @@
+<div class="drawer-menu">
+  <div [style.margin]="'20px 20px 0 0'" [style.text-align]="'right'" [style.cursor]="'pointer'">
+    <!-- <span [style.margin-right]="'8px'" title="Fullscreen" (click)="toggleFullScreen()" class="icon"
+      [ngClass]="{ 'icon-maxmize': !isFullScreen, 'icon-minimize': isFullScreen }">
+    </span> -->
+    <span (click)="close($event)" title="Close" class="icon icon-close"> </span>
+  </div>
+  <ul class="list-group" [style.margin-top.px]="20">
+    <li class="list-group-item" *ngFor="let item of infoData; let i = index">
+      <d-card class="card-container">
+        <d-card-content>
+          <ul>
+            <li>名称：{{item.name}}</li>
+            <li>描述：{{item.description}}</li>
+            <li>查询条件：{{item.queryCriteria}}</li>
+            <li>创建时间：{{item.createTime}}</li>
+          </ul>
+        </d-card-content>
+        <d-card-actions [align]="'start'">
+          <div class="card-block border-left icon icon-delete" (click)="delete()">删除</div>
+          <div class="card-block icon icon-arrow-up" (click)="top()">置顶</div>
+        </d-card-actions>
+      </d-card>
+    </li>
+  </ul>
+</div>
