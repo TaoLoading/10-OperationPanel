@@ -22,15 +22,31 @@
     <da-col-item [daSpan]="24" [daXs]="24">
       <div class="da-content-card">
 
-        <!-- 抽屉 -->
-        <d-button (click)="openDrawer()">打开查询插件</d-button>
+        <!-- 分析插件 -->
+        <section style="float: left;margin-right: 10px;">
+          <div class="btn-group" bsStyle="primary" dDropDown>
+            <a dDropDownToggle class="devui-dropdown-default devui-dropdown-origin">
+              分析插件
+              <span class="icon-select-arrow"></span>
+            </a>
+            <ul dDropDownMenu class="devui-dropdown-menu" role="menu">
+              <li role="menuitem">
+                <a class="devui-dropdown-item" (click)="openLookPlugin()">查看插件</a>
+              </li>
+              <li role="menuitem">
+                <a class="devui-dropdown-item" (click)="openCreatePlugin()">添加插件</a>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 快捷查询抽屉 -->
+        <d-button (click)="openDrawer()">快捷查询</d-button>
         <ng-template #drawerContent>
           <div [style.margin]="'20px 20px 0 0'" [style.text-align]="'right'" [style.cursor]="'pointer'">
             <span (click)="close($event)" title="Close" class="icon icon-close"></span>
           </div>
-          <!-- 抽屉内容 -->
           <div [style.margin]="'20px 20px 0 20px'">
-            <!-- <div>Hello, Drawer!</div> -->
             <div style="margin-bottom: 10px" nz-col nzSpan="24" *ngFor="let val of selectList">
               <d-checkbox [label]="val.name" [isShowTitle]="false" (change)="selectItemChange(val)"
                 [(ngModel)]="val.check">
@@ -78,9 +94,7 @@
             </d-dashboard>
           </div>
         </span>
-
       </div>
     </da-col-item>
   </da-layout-row>
-  <!-- <app-charts1></app-charts1> -->
 </div>

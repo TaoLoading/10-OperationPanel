@@ -2,6 +2,8 @@ import { Component, OnInit, TemplateRef, ViewChild, AfterViewInit } from '@angul
 import { DrawerService, IDrawerOpenResult } from 'ng-devui/drawer';
 import { DashboardWidget } from 'ng-devui/dashboard';
 import { ToastService } from 'ng-devui/toast';
+import { DialogService } from 'ng-devui/modal';
+import { CreatePluginComponent } from './create-plugin/create-plugin.component'
 
 @Component({
   selector: 'app-sample',
@@ -10,7 +12,9 @@ import { ToastService } from 'ng-devui/toast';
 })
 export class SampleComponent implements OnInit, AfterViewInit {
   @ViewChild('drawerContent', { static: true }) drawerContent: TemplateRef<any>;
+  @ViewChild('pluginDrawerContent', { static: true }) pluginDrawerContent: TemplateRef<any>;
   results: IDrawerOpenResult;
+  resultsLook: IDrawerOpenResult;
   // 插件抽屉数据
   selectList = [
     {
@@ -95,7 +99,10 @@ export class SampleComponent implements OnInit, AfterViewInit {
   ];
   // 是否可编辑模块
   canEditor: boolean = false;
-  constructor(private drawerService: DrawerService, private toastService: ToastService) { }
+  // 图表1的宽高
+  width: number = 0;
+  height: number = 0;
+  constructor(private drawerService: DrawerService, private toastService: ToastService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     // 从localStorage中读取仪表盘布局
@@ -116,7 +123,7 @@ export class SampleComponent implements OnInit, AfterViewInit {
     window.dispatchEvent(new Event('resize'));
   }
 
-  // 打开抽屉
+  // 打开快捷查询抽屉
   openDrawer() {
     this.results = this.drawerService.open({
       width: '300px',
@@ -131,7 +138,7 @@ export class SampleComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // 关闭抽屉
+  // 关闭快捷查询抽屉
   close($event) {
     this.results.drawerInstance.hide();
   }
@@ -192,8 +199,45 @@ export class SampleComponent implements OnInit, AfterViewInit {
     }
     this.widgets.splice(i, 1);
   }
-  width: number = 0;
-  height: number = 0;
+
+  // 打开查看插件抽屉
+  openLookPlugin() {
+    console.log('点击了查看插件')
+  }
+
+  // 打开添加插件弹窗
+  openCreatePlugin(dialogtype?: string) {
+    const results = this.dialogService.open({
+      id: 'dialog-service',
+      width: '346px',
+      maxHeight: '600px',
+      title: '添加插件',
+      content: CreatePluginComponent,
+      backdropCloseable: true,
+      dialogtype: dialogtype,
+      onClose: () => { },
+      buttons: [
+        {
+          cssClass: 'primary',
+          text: '确定',
+          disabled: false,
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+          },
+        },
+        {
+          id: 'btn-cancel',
+          cssClass: 'common',
+          text: '取消',
+          handler: ($event: Event) => {
+            results.modalInstance.hide();
+          },
+        },
+      ]
+    })
+  }
+
+  // 渲染图表
   widgetInit() {
     const chart = document.getElementsByClassName("widget")[0].children[0].children[0];
     this.width = chart.parentElement.offsetWidth;
