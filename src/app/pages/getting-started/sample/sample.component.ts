@@ -106,7 +106,6 @@ export class SampleComponent implements OnInit, AfterViewInit {
   constructor(private drawerService: DrawerService, private toastService: ToastService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
-    this.openLookPlugin();
     // 从localStorage中读取仪表盘布局
     this.widgets = JSON.parse(localStorage.getItem('widgets'));
     if (!this.widgets) {
