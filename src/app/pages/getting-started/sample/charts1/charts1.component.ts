@@ -7,11 +7,9 @@ import * as echarts from 'echarts';
   styleUrls: ['./charts1.component.scss']
 })
 export class Charts1Component implements OnInit {
+  // 表格宽高
   cWidth: string = '';
   cHeight: string = '';
-  // 宽高伪数据
-  fWidth: string = '500px';
-  fHeight: string = '300px';
   // 表格的实例。用于初始化和清除实例
   instanceChart = null;
 
@@ -69,6 +67,5 @@ export class Charts1Component implements OnInit {
       height: this.cHeight
     })
     lineChart.setOption(lineChartOption);
-
   }
 }
