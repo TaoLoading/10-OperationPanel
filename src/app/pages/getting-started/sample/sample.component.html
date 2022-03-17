@@ -55,9 +55,10 @@
                 [(width)]="widget.width" [(height)]="widget.height" [minWidth]="widget.minWidth"
                 [minHeight]="widget.minHeight" [maxWidth]="widget.maxWidth" [maxHeight]="widget.maxHeight"
                 [locked]="widget.locked" [noMove]="widget.noMove || widget.locked"
-                [noResize]="widget.noResize || widget.locked" [autoPosition]="widget.autoPosition" class="widget">
-                <span>
-                  <div class="index">{{ index + 1 }}</div>
+                [noResize]="widget.noResize || widget.locked" [autoPosition]="widget.autoPosition" class="widget"
+                (widgetInit)="widgetInit()" (widgetResize)="widgetInit()">
+                <span *ngIf="index === 0">
+                  <!-- <div class="index">{{ index + 1 }}</div>
                   <div class="content">
                     <div>
                       <div>
@@ -70,15 +71,16 @@
                       <div *ngIf="widget.noMove"><span>禁止移动</span></div>
                       <div *ngIf="widget.noResize"><span>禁止变形</span></div>
                     </div>
-                  </div>
+                  </div> -->
+                  <app-charts1 [eWidth]="width" [eHeight]="height"></app-charts1>
                 </span>
               </d-dashboard-widget>
             </d-dashboard>
           </div>
         </span>
-        <app-charts1></app-charts1>
 
       </div>
     </da-col-item>
   </da-layout-row>
+  <!-- <app-charts1></app-charts1> -->
 </div>

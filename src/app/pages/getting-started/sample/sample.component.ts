@@ -192,4 +192,13 @@ export class SampleComponent implements OnInit, AfterViewInit {
     }
     this.widgets.splice(i, 1);
   }
+  width: number = 0;
+  height: number = 0;
+  widgetInit() {
+    const w = document.getElementsByClassName("widget")[0].children[0].children[0];
+    // console.log(w.parentElement.offsetWidth)
+    // console.log(w.childNodes[0])
+    this.width = w.parentElement.offsetWidth;
+    this.height = w.parentElement.offsetHeight;
+  }
 }

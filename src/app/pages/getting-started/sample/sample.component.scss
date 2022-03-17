@@ -21,7 +21,7 @@ d-button {
 .widget {
   position: relative;
 
-  .index {
+  /* .index {
     position: absolute;
     font-size: 28px;
     color: $devui-aide-text;
@@ -32,6 +32,7 @@ d-button {
   }
 
   .content {
+    padding: 0;
     font-size: 12px;
     line-height: 28px;
     display: flex;
@@ -51,7 +52,7 @@ d-button {
         font-size: 16px;
       }
     }
-  }
+  } */
 }
 
 // 闪烁边框
