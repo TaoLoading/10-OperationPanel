@@ -8,6 +8,9 @@
   <ul class="list-group" [style.margin-top.px]="20">
     <li class="list-group-item" *ngFor="let item of infoData; let i = index">
       <d-card class="card-container" *ngIf="item">
+        <d-card-header *ngIf="item.isTop">
+          <d-avatar dCardAvatar [name]="'置顶'"></d-avatar>
+        </d-card-header>
         <d-card-content>
           <ul>
             <li>名称：{{item.name}}</li>

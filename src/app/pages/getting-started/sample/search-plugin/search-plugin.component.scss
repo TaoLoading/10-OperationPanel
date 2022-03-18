@@ -81,3 +81,10 @@ d-card-actions {
 .border-left {
   border-right: 1px solid #E9E9E9;
 }
+
+// 置顶图标样式
+d-avatar {
+  position: absolute;
+  top: 5px;
+  right: -10px;
+}
