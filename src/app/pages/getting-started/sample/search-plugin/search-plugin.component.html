@@ -7,7 +7,7 @@
   </div>
   <ul class="list-group" [style.margin-top.px]="20">
     <li class="list-group-item" *ngFor="let item of infoData; let i = index">
-      <d-card class="card-container">
+      <d-card class="card-container" *ngIf="item">
         <d-card-content>
           <ul>
             <li>名称：{{item.name}}</li>
@@ -16,9 +16,10 @@
             <li>创建时间：{{item.createTime}}</li>
           </ul>
         </d-card-content>
-        <d-card-actions [align]="'start'">
-          <div class="card-block border-left icon icon-delete" (click)="delete()">删除</div>
-          <div class="card-block icon icon-arrow-up" (click)="top()">置顶</div>
+        <d-card-actions [align]="'start'" *ngIf="item">
+          <div class="card-block border-left icon icon-delete" (click)="delete(item)">删除</div>
+          <div class="card-block icon icon-arrow-up" (click)="top(item)" *ngIf="!item.isTop">置顶</div>
+          <div class="card-block icon icon-arrow-down" (click)="top(item)" *ngIf="item.isTop">取消置顶</div>
         </d-card-actions>
       </d-card>
     </li>
