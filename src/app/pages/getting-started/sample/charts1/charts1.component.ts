@@ -24,14 +24,16 @@ export class Charts1Component implements OnInit {
 
   ngOnChanges(change) {
     // 当接收到新的值时对表格清除实例并重新渲染
-    if (change.eWidth.currentValue != 0 && change.eHeight.currentValue != 0) {
+    if (change.eWidth) {
       this.cWidth = change.eWidth.currentValue * 0.95 + 'px';
-      this.cHeight = change.eHeight.currentValue * 0.95 + 'px';
-      if (this.instanceChart) {
-        this.instanceChart.dispose();
-      }
-      this.initCharts();
     }
+    if (change.eHeight) {
+      this.cHeight = change.eHeight.currentValue * 0.95 + 'px';
+    }
+    if (this.instanceChart) {
+      this.instanceChart.dispose();
+    }
+    this.initCharts();
   }
 
   // 初始化表格
