@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastService } from 'ng-devui/toast';
 
 @Component({
   selector: 'app-search-plugin',
@@ -38,7 +39,7 @@ export class SearchPluginComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private toastService: ToastService) { }
 
   ngOnInit(): void {
     // 读取localStorage中的插件数据
@@ -61,6 +62,9 @@ export class SearchPluginComponent implements OnInit {
         this.infoData.splice(i, 1);
         // 将插件数据存储到localStorage中
         localStorage.setItem('infoData', JSON.stringify(this.infoData));
+        this.toastService.open({
+          value: [{ severity: 'success', summary: '删除成功' }],
+        });
         return
       }
     }
@@ -93,5 +97,12 @@ export class SearchPluginComponent implements OnInit {
         }
       }
     }
+  }
+
+  // 使用插件
+  applyPlugin(item) {
+    this.toastService.open({
+      value: [{ severity: 'success', summary: '当前搜索条件为', content: item.queryCriteria }],
+    });
   }
 }

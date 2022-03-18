@@ -11,7 +11,7 @@
         <d-card-header *ngIf="item.isTop">
           <d-avatar dCardAvatar [name]="'置顶'"></d-avatar>
         </d-card-header>
-        <d-card-content>
+        <d-card-content (click)="applyPlugin(item)">
           <ul>
             <li>名称：{{item.name}}</li>
             <li>描述：{{item.description}}</li>
