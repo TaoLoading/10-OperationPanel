@@ -184,6 +184,9 @@ export class SampleComponent implements OnInit, AfterViewInit {
       const element = this.widgets[index];
       element['locked'] = true;
     }
+    this.toastService.open({
+      value: [{ severity: 'success', summary: '保存成功' }],
+    });
     // 存储当前布局到localStorage
     localStorage.setItem('widgets', JSON.stringify(this.widgets))
   }
