@@ -1,3 +1,22 @@
 <div class="modal-test-component">
-  此处为添加插件具体信息
+  <form dForm [layout]="layoutDirection" [labelSize]="'sm'">
+    <d-form-item>
+      <d-form-label>名称：</d-form-label>
+      <d-form-control>
+        <input dTextInput name="plugin.name" placeholder="请输入插件名称" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item>
+      <d-form-label>描述：</d-form-label>
+      <d-form-control>
+        <input dTextInput name="plugin.description" placeholder="请输入插件描述" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item>
+      <d-form-label>查询条件：</d-form-label>
+      <d-form-control>
+        <input dTextInput name="plugin.queryCriteria" placeholder="请输入查询条件" />
+      </d-form-control>
+    </d-form-item>
+  </form>
 </div>
