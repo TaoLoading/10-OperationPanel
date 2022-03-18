@@ -15,6 +15,7 @@ input[type='text'] {
   background-color: $devui-base-bg;
 }
 .list-group-item {
+  float: left;
   border-bottom: 1px solid $devui-dividing-line;
   padding: 16px 24px;
 }
