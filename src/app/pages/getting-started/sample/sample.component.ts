@@ -54,48 +54,42 @@ export class SampleComponent implements OnInit, AfterViewInit {
       y: 0,
       width: 2,
       height: 1,
-      locked: true,
-      flag: 0
+      locked: true
     },
     {
       x: 2,
       y: 0,
       width: 2,
       height: 1,
-      locked: true,
-      flag: 1
+      locked: true
     },
     {
       x: 4,
       y: 0,
       width: 2,
       height: 1,
-      locked: true,
-      flag: 2
+      locked: true
     },
     {
       x: 6,
       y: 0,
       width: 2,
       height: 1,
-      locked: true,
-      flag: 3
+      locked: true
     },
     {
       x: 8,
       y: 0,
       width: 2,
       height: 1,
-      locked: true,
-      flag: 4
+      locked: true
     },
     {
       x: 10,
       y: 0,
       width: 2,
       height: 1,
-      locked: true,
-      flag: 5
+      locked: true
     }
   ];
   // 是否可编辑模块
