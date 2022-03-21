@@ -72,24 +72,10 @@
                 [minHeight]="widget.minHeight" [maxWidth]="widget.maxWidth" [maxHeight]="widget.maxHeight"
                 [locked]="widget.locked" [noMove]="widget.noMove || widget.locked"
                 [noResize]="widget.noResize || widget.locked" [autoPosition]="widget.autoPosition" class="widget"
-                (widgetInit)="widgetInit()" (widgetResize)="widgetInit()">
-                <span *ngIf="index === 0">
-                  <!-- <div class="index">{{ index + 1 }}</div>
-                  <div class="content">
-                    <div>
-                      <div>
-                        <span>坐标</span><span class="coordinate">{{ widget.x }} , {{ widget.y }}</span>
-                      </div>
-                      <div>
-                        <span>宽 & 高</span><span class="size">{{ widget.width }} x {{ widget.height }}</span>
-                      </div>
-                      <div *ngIf="widget.locked"><span>固定形态</span></div>
-                      <div *ngIf="widget.noMove"><span>禁止移动</span></div>
-                      <div *ngIf="widget.noResize"><span>禁止变形</span></div>
-                    </div>
-                  </div> -->
-                  <app-charts1 [eWidth]="width" [eHeight]="height"></app-charts1>
-                </span>
+                (widgetInit)="widgetInit(index)" (widgetResize)="widgetInit(index)">
+                <div>
+                  <app-charts1 [eWidth]="widthArr[index]" [eHeight]="heightArr[index]" [index]="index"></app-charts1>
+                </div>
               </d-dashboard-widget>
             </d-dashboard>
           </div>

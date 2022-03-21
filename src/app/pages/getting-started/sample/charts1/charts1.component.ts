@@ -18,6 +18,7 @@ export class Charts1Component implements OnInit {
   // 接收从父组件传过来的宽度和高度
   @Input() eWidth: number = 0;
   @Input() eHeight: number = 0;
+  @Input() index: number = 0;
 
   ngOnInit(): void {
   }
@@ -39,7 +40,8 @@ export class Charts1Component implements OnInit {
   // 初始化表格
   initCharts() {
     const ec = echarts as any;
-    const lineChart = ec.init(document.getElementById('lineChart'));
+    const eWrap = document.getElementsByClassName('lineChart')[this.index];
+    const lineChart = ec.init(eWrap);
     this.instanceChart = lineChart;
     const lineChartOption = {
       grid: {

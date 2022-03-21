@@ -100,9 +100,12 @@ export class SampleComponent implements OnInit, AfterViewInit {
   ];
   // 是否可编辑模块
   canEditor: boolean = false;
-  // 图表1的宽高
+  // 单个图表宽高
   width: number = 0;
   height: number = 0;
+  // 存放全部图标宽高的数组
+  widthArr: number[] = [];
+  heightArr: number[] = [];
   constructor(private drawerService: DrawerService, private toastService: ToastService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
@@ -237,10 +240,20 @@ export class SampleComponent implements OnInit, AfterViewInit {
   }
 
   // 渲染图表
-  widgetInit() {
-    const chart = document.getElementsByClassName("widget")[0].children[0].children[0];
+  widgetInit(index) {
+    // 获取每个图表的宽高
+    const chart = document.getElementsByClassName("widget")[index].children[0].children[0];
     this.width = chart.parentElement.offsetWidth;
     this.height = chart.parentElement.offsetHeight;
+    if (this.widthArr.length !== this.widgets.length) {
+      // 此时宽高数组中还未记录全部数据，证明是在进行图标的初始化展示，继续将单个图表的宽高放入数组中
+      this.widthArr.push(this.width);
+      this.heightArr.push(this.height);
+    } else {
+      // 此时宽高数组中已记录全部数据，证明实在拖拽某个图标，将数组中该图表的数据进行替换
+      this.widthArr[index] = this.width;
+      this.heightArr[index] = this.height;
+    }
   }
 
   // 打开查看插件抽屉
