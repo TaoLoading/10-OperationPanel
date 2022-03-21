@@ -15,30 +15,32 @@ export class Charts1Component implements OnInit {
 
   constructor() { }
 
-  // 接收从父组件传过来的宽度和高度
   @Input() eWidth: number = 0;
   @Input() eHeight: number = 0;
   @Input() index: number = 0;
+  @Input() isAdd: boolean = false;
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ngOnChanges(change) {
     // 当接收到新的值时对表格清除实例并重新渲染
-    if (change.eWidth) {
+    if (change.eWidth.currentValue) {
       this.cWidth = change.eWidth.currentValue * 0.95 + 'px';
     }
-    if (change.eHeight) {
+    if (change.eHeight.currentValue) {
       this.cHeight = change.eHeight.currentValue * 0.95 + 'px';
     }
     if (this.instanceChart) {
       this.instanceChart.dispose();
     }
-    this.initCharts();
+    if (change.eWidth) {
+      this.initPages();
+    }
   }
 
-  // 初始化表格
-  initCharts() {
+  // 初始化页面
+  initPages() {
+    // 未进行添加操作，此时是初始化展示页面，渲染图表
     const ec = echarts as any;
     const eWrap = document.getElementsByClassName('lineChart')[this.index];
     const lineChart = ec.init(eWrap);

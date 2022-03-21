@@ -21,7 +21,6 @@
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24" [daXs]="24">
       <div class="da-content-card">
-
         <!-- 分析插件 -->
         <section style="float: left;margin-right: 10px;">
           <div class="btn-group" bsStyle="primary" dDropDown [trigger]="'hover'">
@@ -58,12 +57,12 @@
         <!-- 可自定义大屏 -->
         <span>
           <span>
-            <d-button [bsStyle]="'danger'" (btnClick)="editorWidget()" [style.float]="'right'">编辑模块</d-button>
-            <d-button [bsStyle]="'common'" (btnClick)="saveEditor()" *ngIf="canEditor" [style.float]="'right'">
-              保存编辑
+            <d-button *ngIf="!canEditor" (btnClick)="editorWidget()" [style.float]="'right'">编辑大屏</d-button>
+            <d-button [bsStyle]="'common'" (btnClick)="addWidget()" *ngIf="canEditor" [style.float]="'right'">
+              添加模块
             </d-button>
-            <!-- <d-button (btnClick)="addWidget()">添加模块</d-button>
-            <d-button [bsStyle]="'common'" (btnClick)="deleteWidget(widgets.length - 1)">删除模块</d-button> -->
+            <d-button (btnClick)="saveEditor()" *ngIf="canEditor" [style.float]="'right'">保存编辑</d-button>
+            <!-- <d-button [bsStyle]="'common'" (btnClick)="deleteWidget(widgets.length - 1)">删除模块</d-button> -->
           </span>
           <div>
             <d-dashboard #dashboard="dDashboard" class="dashboard" [ngClass]="canEditor==true ? 'arrow_box' : ''">
@@ -74,7 +73,8 @@
                 [noResize]="widget.noResize || widget.locked" [autoPosition]="widget.autoPosition" class="widget"
                 (widgetInit)="widgetInit(index)" (widgetResize)="widgetInit(index)">
                 <div>
-                  <app-charts1 [eWidth]="widthArr[index]" [eHeight]="heightArr[index]" [index]="index"></app-charts1>
+                  <app-charts1 [eWidth]="widthArr[index]" [eHeight]="heightArr[index]" [index]="index" [isAdd]="isAdd">
+                  </app-charts1>
                 </div>
               </d-dashboard-widget>
             </d-dashboard>
