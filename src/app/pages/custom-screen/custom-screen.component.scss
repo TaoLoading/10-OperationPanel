@@ -1,0 +1,190 @@
+@import "~ng-devui/styles-var/devui-var.scss";
+@import "src/app/@shared/styles/common.scss";
+
+.da-content-card {
+  padding: 24px;
+}
+
+p {
+  font-size: $devui-font-size-price;
+}
+
+// 仪表盘
+.dashboard {
+  background-color: $devui-global-bg;
+}
+d-button {
+  display: inline-block;
+  margin-bottom: 8px;
+  margin-right: 4px;
+}
+.widget {
+  position: relative;
+  .handleData {
+    position: absolute;
+    width: 100%;
+    height: 15px;
+    font-size: 15px;
+    z-index: 100;
+  }
+  .changeData {
+    float: right;
+    margin-right: 5px;
+    width: 15px;
+    height: 15px;
+    background-color: #879BD7;
+    border-radius: 100%;
+    cursor: pointer;
+  }
+  .deleteData {
+    float: right;
+    margin-right: 5px;
+    width: 15px;
+    height: 15px;
+    background-color: #ffa2a2;
+    border-radius: 100%;
+    cursor: pointer;
+  }
+}
+
+// 闪烁边框
+.arrow_box {
+  animation: glow 800ms ease-out infinite alternate;
+}
+@keyframes glow {
+  0% {
+    border-color: #393;
+    box-shadow: 0 0 5px rgba(0, 255, 0, .2), inset 0 0 5px rgba(0, 255, 0, .1), 0 1px 0 #393;
+  }
+
+  100% {
+    border-color: #6f6;
+    box-shadow: 0 0 20px rgba(0, 255, 0, .6), inset 0 0 10px rgba(0, 255, 0, .4), 0 1px 0 #6f6;
+  }
+}
+
+// 文字提示
+:host ::ng-deep .custom-class {
+  .devui-toast-item {
+    color: #252b3a;
+    background-color: #ffffff;
+    
+    .devui-toast-icon-close {
+      top: 10px;
+      right: 13px;
+
+      .devui-toast-close-icon {
+        fill: #252b3a;
+      }
+    }
+    .devui-toast-image {
+      top: 15px;
+    }
+
+    .devui-toast-message {
+      line-height: 23px;
+
+      .devui-toast-title {
+        font-size: 16px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// 查看插件抽屉
+.searchPlug {
+  // 外层抽屉样式
+  input[type='text'] {
+    width: 300px;
+    height: 32px;
+    box-sizing: border-box;
+    padding: 4px 8px;
+    font-size: $devui-font-size;
+    color: $devui-text;
+    vertical-align: middle;
+    border: 1px solid $devui-dividing-line;
+    border-radius: $devui-border-radius;
+    outline: none;
+    background-color: $devui-base-bg;
+  }
+  .list-group-item {
+    cursor: pointer;
+    float: left;
+    border-bottom: 1px solid $devui-dividing-line;
+    padding: 16px 24px;
+  }
+  .operation-area {
+    margin: 16px 24px;
+  
+    d-button {
+      margin-top: 16px;
+    }
+  }
+  
+  // 内层卡片样式
+  .card-icon {
+    // cursor: pointer;
+    font-size: $devui-font-size-icon;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .card-icon + span {
+    vertical-align: middle;
+  }
+  d-card {
+    transition:
+      box-shadow $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+      transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+  
+    &:hover {
+      box-shadow: $devui-shadow-length-hover $devui-light-shadow;
+      transform: translateY(-5px);
+    }
+  }
+  .devui-card {
+    padding: 0;
+  }
+  .card-container {
+    padding-top: 15px;
+    position: relative;
+    width: 251px;
+    height: 180px;
+  }
+  d-card-content ul li {
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 13px;
+    color: #8B8B8B;
+  }
+  d-card-actions {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #E9E9E9;
+  }
+  .card-block {
+    cursor: pointer;
+    width: 125px;
+    height: 30px;
+    margin: 0;
+    text-align: center;
+    line-height: 30px;
+    color: #8B8B8B;
+    background-color: #FAFAFA;
+  }
+  .border-left {
+    border-right: 1px solid #E9E9E9;
+  }
+  
+  // 置顶图标样式
+  d-avatar {
+    position: absolute;
+    top: 5px;
+    right: -10px;
+  }
+
+}

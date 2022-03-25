@@ -1,0 +1,6 @@
+<!-- 本组件为自定义大屏中的图表 -->
+<div class="center" [style.text-align]="'center'" [style.line-height]="this.cHeight">
+  <div *ngIf="!showBtn" class="lineChart"></div>
+  <div ng-show="isShowNew" class="newLineChart"></div>
+  <d-button id="primaryBtn" *ngIf="showBtn" (click)="openChangeData()">选择数据源</d-button>
+</div>

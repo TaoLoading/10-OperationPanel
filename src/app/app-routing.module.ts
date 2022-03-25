@@ -6,7 +6,7 @@ import { RegisterComponent } from './@shared/components/register/register.compon
 
 const routes: Routes = [
   {
-    path: 'pages',
+    path: 'custom-screen',
     loadChildren: () => import('./pages/pages.module').then((m) => m.PagesModule),
     canActivate: [AuthGuardService],
   },
@@ -20,12 +20,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'pages',
+    redirectTo: 'custom-screen',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: 'pages',
+    redirectTo: 'custom-screen',
   },
 ];
 
@@ -37,4 +37,4 @@ const config: ExtraOptions = {
   imports: [RouterModule.forRoot(routes, config)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

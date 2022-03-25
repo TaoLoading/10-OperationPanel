@@ -11,8 +11,9 @@ const routes: Routes = [
       {
         path: 'getting-started',
         loadChildren: () =>
-          import('./getting-started/getting-started.module').then(
-            (m) => m.GettingStartedModule
+          // import('./getting-started/getting-started.module').then(
+          import('./custom-screen/custom-screen.module').then(
+            (m) => m.ScreenModule
           )
       },
       {
@@ -32,4 +33,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }

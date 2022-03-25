@@ -39,6 +39,7 @@ import { DaGridModule } from './layouts/da-grid';
 import { HeaderLogoComponent } from './components/header/header-logo/header-logo.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { RegisterComponent } from './components/register/register.component';
+import { CustomChartComponent } from './components/custom-chart/custom-chart.component'
 
 const DEVUI_MODULES = [
   LayoutModule,
@@ -64,6 +65,7 @@ const COMPONENTS = [
   HeaderComponent,
   FooterComponent,
   NavbarComponent,
+  CustomChartComponent,
   PersonalizeComponent
 ];
 @NgModule({
