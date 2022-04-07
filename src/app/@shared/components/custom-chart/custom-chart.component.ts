@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DialogService } from 'ng-devui/modal';
 import * as echarts from 'echarts';
+import { Subscription } from "rxjs";
+import { ChangeModalService } from '../../../pages/custom-screen/services/change-modal.service';
 
 @Component({
   selector: 'app-custom-chart',
@@ -19,27 +21,50 @@ export class CustomChartComponent implements OnInit {
   isNew: boolean = false;
   // 是否展示新图表
   isShowNew: boolean = false;
+  // 图表序号
+  chartNum: number = null;
 
-  constructor(private dialogService: DialogService) { }
+  constructor(
+    private dialogService: DialogService,
+    private ChangeModalService: ChangeModalService,
+  ) { }
 
   @Input() eWidth: number = 0;
   @Input() eHeight: number = 0;
   @Input() index: number = 0;
   @Input() isAdd: boolean = false;
+  @Input() changeDataIndex: number = 0;
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    // 修改表格数据
+    // TODO 此种方式会初始化多次导致弹窗多次
+    /* this.ChangeModalService.getData().subscribe(value => {
+      this.chartNum = value;
+      if (value !== undefined) {
+        this.openChangeData()
+      }
+    }) */
+  }
 
   ngOnChanges(change) {
-    // 当接收到新的值时对图表清除实例并重新渲染
+    // 如果是点击了修改数据源则重新选择数据源
+    // TODO 此种方式会因为改变同一表格数据源时index值不变导致失效
+    if (change.changeDataIndex && change.changeDataIndex.currentValue === this.index) {
+      this.openChangeData();
+    }
+    // 获取改变后的宽度
     if (change.eWidth !== undefined && change.eWidth.currentValue) {
       this.cWidth = change.eWidth.currentValue * 0.95 + 'px';
     }
+    // 获取改变后的高度
     if (change.eHeight !== undefined && change.eHeight.currentValue) {
       this.cHeight = change.eHeight.currentValue * 0.95 + 'px';
     }
+    // 获取状态，是否为新添加的模块
     if ((change.eWidth || change.eHeight) && change.isAdd) {
       this.isNew = change.isAdd.currentValue;
     }
+    // 重新渲染图表
     if ((change.eWidth && change.eWidth.currentValue) || (change.eHeight && change.eHeight.currentValue)) {
       if (this.instanceChart) {
         this.instanceChart.dispose();

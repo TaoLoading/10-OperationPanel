@@ -10,127 +10,44 @@
   <da-layout-row [daGutter]="[24, 24]">
     <da-col-item [daSpan]="24" [daXs]="24">
       <div class="da-content-card">
-        <!-- 分析插件 -->
-        <section style="float: left;margin-right: 10px;">
-          <div class="btn-group" bsStyle="primary" dDropDown [trigger]="'hover'">
-            <a dDropDownToggle class="devui-dropdown-default devui-dropdown-origin">
-              分析插件
-              <span class="icon-select-arrow"></span>
-            </a>
-            <ul dDropDownMenu class="devui-dropdown-menu" role="menu">
-              <li role="menuitem">
-                <a class="devui-dropdown-item" (click)="openSearchPlugin()">查看插件</a>
-              </li>
-              <li role="menuitem">
-                <a class="devui-dropdown-item" (click)="openCreatePlugin()">添加插件</a>
-              </li>
-            </ul>
-          </div>
-        </section>
+        <!-- 按钮区 -->
+        <div>
+          <d-button *ngIf="!canEditor" (btnClick)="editorWidget()">编辑大屏</d-button>
+          <d-button [bsStyle]="'common'" (btnClick)="addWidget()" *ngIf="canEditor">
+            添加模块
+          </d-button>
+          <d-button (btnClick)="saveEditor()" *ngIf="canEditor">保存布局</d-button>
+        </div>
 
-        <!-- 添加插件内容弹窗 -->
-        <ng-template #createPluginModal>
-          <form dForm [layout]="layoutDirection" [labelSize]="'sm'">
-            <d-form-item>
-              <d-form-label>名称：</d-form-label>
-              <d-form-control>
-                <input dTextInput name="plugin.name" placeholder="请输入插件名称" />
-              </d-form-control>
-            </d-form-item>
-            <d-form-item>
-              <d-form-label>描述：</d-form-label>
-              <d-form-control>
-                <input dTextInput name="plugin.description" placeholder="请输入插件描述" />
-              </d-form-control>
-            </d-form-item>
-            <d-form-item>
-              <d-form-label>查询条件：</d-form-label>
-              <d-form-control>
-                <input dTextInput name="plugin.queryCriteria" placeholder="请输入查询条件" />
-              </d-form-control>
-            </d-form-item>
-          </form>
-        </ng-template>
-
-        <!-- 查看插件内容抽屉 -->
-        <ng-template #searchPluginDrawer>
-          <div class="drawer-menu searchPlug">
-            <div [style.margin]="'20px 20px 0 0'" [style.text-align]="'right'" [style.cursor]="'pointer'">
-              <span [style.margin-right]="'8px'" title="Fullscreen" (click)="toggleFullScreen()" class="icon"
-                [ngClass]="{ 'icon-maxmize': !isFullScreen, 'icon-minimize': isFullScreen }">
-              </span>
-              <span (click)="close($event)" title="Close" class="icon icon-close"> </span>
-            </div>
-            <ul class="list-group" [style.margin-top.px]="20">
-              <li class="list-group-item" *ngFor="let item of infoData; let i = index">
-                <d-card class="card-container" *ngIf="item">
-                  <d-card-header *ngIf="item.isTop">
-                    <d-avatar dCardAvatar [name]="'置顶'"></d-avatar>
-                  </d-card-header>
-                  <d-card-content (click)="applyPlugin(item)">
-                    <ul>
-                      <li>名称：{{item.name}}</li>
-                      <li>描述：{{item.description}}</li>
-                      <li>查询条件：{{item.queryCriteria}}</li>
-                      <li>创建时间：{{item.createTime}}</li>
-                    </ul>
-                  </d-card-content>
-                  <d-card-actions [align]="'start'" *ngIf="item">
-                    <div class="card-block border-left icon icon-delete" (click)="delete(item)">删除</div>
-                    <div class="card-block icon icon-arrow-up" (click)="top(item)" *ngIf="!item.isTop">置顶</div>
-                    <div class="card-block icon icon-arrow-down" (click)="top(item)" *ngIf="item.isTop">取消置顶</div>
-                  </d-card-actions>
-                </d-card>
-              </li>
-            </ul>
-          </div>
-        </ng-template>
-
-        <!-- 快捷查询抽屉 -->
-        <d-button (click)="openConditionDrawer()">快捷查询</d-button>
-        <ng-template #conditionDrawer>
-          <div [style.margin]="'20px 20px 0 0'" [style.text-align]="'right'" [style.cursor]="'pointer'">
-            <span (click)="close($event)" title="Close" class="icon icon-close"></span>
-          </div>
-          <div [style.margin]="'20px 20px 0 20px'">
-            <div style="margin-bottom: 10px" nz-col nzSpan="24" *ngFor="let val of selectList">
-              <d-checkbox [label]="val.name" [isShowTitle]="false" (change)="selectItemChange(val)"
-                [(ngModel)]="val.check">
-              </d-checkbox>
-            </div>
-          </div>
-        </ng-template>
-
-        <!-- 可自定义大屏 -->
-        <span>
-          <span>
-            <d-button *ngIf="!canEditor" (btnClick)="editorWidget()" [style.float]="'right'">编辑大屏</d-button>
-            <d-button [bsStyle]="'common'" (btnClick)="addWidget()" *ngIf="canEditor" [style.float]="'right'">
-              添加模块
-            </d-button>
-            <d-button (btnClick)="saveEditor()" *ngIf="canEditor" [style.float]="'right'">保存布局</d-button>
-            <!-- <d-button [bsStyle]="'common'" (btnClick)="deleteWidget(widgets.length - 1)">删除模块</d-button> -->
-          </span>
-          <div>
-            <d-dashboard #dashboard="dDashboard" class="dashboard" [ngClass]="canEditor==true ? 'arrow_box' : ''">
-              <d-dashboard-widget *ngFor="let widget of widgets; let index = index" [(x)]="widget.x" [(y)]="widget.y"
-                [(width)]="widget.width" [(height)]="widget.height" [minWidth]="widget.minWidth"
-                [minHeight]="widget.minHeight" [maxWidth]="widget.maxWidth" [maxHeight]="widget.maxHeight"
-                [locked]="widget.locked" [noMove]="widget.noMove || widget.locked"
-                [noResize]="widget.noResize || widget.locked" [autoPosition]="widget.autoPosition" class="widget"
-                (widgetInit)="widgetInit(index)" (widgetResize)="widgetInit(index)">
-                <div class="handleData" *ngIf="canEditor">
-                  <div class="deleteData" (click)="deleteData(index)" dTooltip></div>
-                  <div class="changeData" (click)="changeData(index)" dTooltip></div>
+        <!-- 模块展示区 -->
+        <div>
+          <d-dashboard #dashboard="dDashboard" class="dashboard" [ngClass]="canEditor==true ? 'arrow_box' : ''">
+            <d-dashboard-widget *ngFor="let widget of widgets; let index = index" [(x)]="widget.x" [(y)]="widget.y"
+              [(width)]="widget.width" [(height)]="widget.height" [minWidth]="widget.minWidth"
+              [minHeight]="widget.minHeight" [maxWidth]="widget.maxWidth" [maxHeight]="widget.maxHeight"
+              [locked]="widget.locked" [noMove]="widget.noMove || widget.locked"
+              [noResize]="widget.noResize || widget.locked" [autoPosition]="widget.autoPosition" class="widget"
+              (widgetInit)="widgetInit(index)" (widgetResize)="widgetInit(index)">
+              <div class="handleData" *ngIf="canEditor">
+                <!-- 删除模块 -->
+                <div class="deleteData" (click)="deleteData(index)" dPopover [content]="'删除模块'"
+                  [position]="['top','bottom']" [trigger]="'hover'" [popType]="'default'" [controlled]='true'
+                  [appendToBody]='true'>
                 </div>
-                <div>
-                  <app-custom-chart [eWidth]="widthArr[index]" [eHeight]="heightArr[index]" [index]="index" [isAdd]="isAdd">
-                  </app-custom-chart>
+                <!-- 修改图表 -->
+                <div class="changeData" (click)="changeData(index)" dPopover [content]="'修改数据源'"
+                  [position]="['top','bottom']" [trigger]="'hover'" [popType]="'default'" [controlled]='true'
+                  [appendToBody]='true'>
                 </div>
-              </d-dashboard-widget>
-            </d-dashboard>
-          </div>
-        </span>
+              </div>
+              <div>
+                <app-custom-chart [eWidth]="widthArr[index]" [eHeight]="heightArr[index]" [index]="index"
+                  [isAdd]="isAdd" [changeDataIndex]="changeDataIndex">
+                </app-custom-chart>
+              </div>
+            </d-dashboard-widget>
+          </d-dashboard>
+        </div>
       </div>
     </da-col-item>
   </da-layout-row>
