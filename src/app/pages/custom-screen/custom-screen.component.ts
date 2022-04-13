@@ -1,10 +1,6 @@
-import { Component, OnInit, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
-import { IDrawerOpenResult } from 'ng-devui/drawer';
+import { Component, OnInit } from '@angular/core';
 import { DashboardWidget } from 'ng-devui/dashboard';
-import { ToastService } from 'ng-devui/toast';
-import { DialogService } from 'ng-devui/modal';
-import { FormLayout } from 'ng-devui/form';
-import { ChangeModalService } from './services/change-modal.service';
+import { IDrawerOpenResult, ToastService, DialogService, FormLayout } from 'ng-devui';
 
 @Component({
   selector: 'app-custom-screen',
@@ -13,7 +9,6 @@ import { ChangeModalService } from './services/change-modal.service';
 })
 
 export class CustomScreenComponent implements OnInit {
-
   results: IDrawerOpenResult;
   resultsLook: IDrawerOpenResult;
   // 大屏模块数据
@@ -54,8 +49,7 @@ export class CustomScreenComponent implements OnInit {
 
   constructor(
     private toastService: ToastService,
-    private dialogService: DialogService,
-    private ChangeModalService: ChangeModalService
+    private dialogService: DialogService
   ) { }
 
   ngOnInit(): void {
@@ -171,7 +165,9 @@ export class CustomScreenComponent implements OnInit {
   // 打开修改模块数据源弹窗
   changeData(index) {
     this.changeDataIndex = index;
-    // 广播要修改弹窗的序号
-    // this.ChangeModalService.sendData(index);
+    // 过一秒后重置changeDataIndex的值，防止子组件由于changeDataIndex值不变而不触发弹窗
+    setTimeout(() => {
+      this.changeDataIndex = null;
+    }, 1000);
   }
 }

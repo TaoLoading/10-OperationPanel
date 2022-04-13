@@ -1,6 +1,20 @@
 <!-- 本组件为自定义大屏中的图表 -->
 <div class="center" [style.text-align]="'center'" [style.line-height]="this.cHeight">
   <div *ngIf="!showBtn" class="lineChart"></div>
-  <div ng-show="isShowNew" class="newLineChart"></div>
+  <div ng-show="isNewChart" class="newChart"></div>
   <d-button id="primaryBtn" *ngIf="showBtn" (click)="openChangeData()">选择数据源</d-button>
 </div>
+
+<!-- 选择数据源弹窗内容 -->
+<ng-template #changeDataModal>
+  <form dForm [layout]="layoutDirection" [labelSize]="'sm'" style="font-size: 13px;">
+    <d-form-item style="margin-left: 10px;">
+      <d-form-label [required]="true">选择数据源：</d-form-label>
+      <d-form-control>
+        <d-select style="width: 120px; display: inline-block;" name="changeDataArr" [options]="changeDataArr"
+          placeholder="请选择数据源" [(ngModel)]="selectType">
+        </d-select>
+      </d-form-control>
+    </d-form-item>
+  </form>
+</ng-template>

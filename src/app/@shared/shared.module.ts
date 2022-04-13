@@ -24,7 +24,8 @@ import {
   BreadcrumbModule,
   ModalModule,
   CardModule,
-  CheckBoxModule
+  CheckBoxModule,
+  SelectModule
 } from 'ng-devui';
 import { I18nModule } from 'ng-devui/i18n';
 import { DashboardModule } from 'ng-devui/dashboard';
@@ -61,7 +62,8 @@ const DEVUI_MODULES = [
   CardModule,
   PopoverModule,
   DashboardModule,
-  ModalModule
+  ModalModule,
+  SelectModule
 ];
 const COMPONENTS = [
   HeaderComponent,

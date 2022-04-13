@@ -1,8 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DialogService } from 'ng-devui/modal';
+import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { DialogService, FormLayout } from 'ng-devui'
 import * as echarts from 'echarts';
-import { Subscription } from "rxjs";
-import { ChangeModalService } from '../../../pages/custom-screen/services/change-modal.service';
 
 @Component({
   selector: 'app-custom-chart',
@@ -10,6 +8,8 @@ import { ChangeModalService } from '../../../pages/custom-screen/services/change
   styleUrls: ['./custom-chart.component.scss']
 })
 export class CustomChartComponent implements OnInit {
+  @ViewChild('changeDataModal', { static: true }) changeDataModal: TemplateRef<any>;
+
   // 图表宽高
   cWidth: string = '';
   cHeight: string = '';
@@ -18,16 +18,44 @@ export class CustomChartComponent implements OnInit {
   // 是否展示选择数据源按钮
   showBtn: boolean = false;
   // 是否为新添加的模块
-  isNew: boolean = false;
-  // 是否展示新图表
-  isShowNew: boolean = false;
+  isNewModule: boolean = false;
+  // 是否为新添加的图表
+  isNewChart: boolean = false;
   // 图表序号
   chartNum: number = null;
+  // 表格控件需要
+  layoutDirection: FormLayout = FormLayout.Horizontal;
+  // 选择数据源下拉展示
+  changeDataArr: Array<string> = ['图表1', '图表2', '图表3'];
+  // 选择数据源下拉默认展示
+  selectType: string = '图表1';
+  // 图表的配置
+  chartOptions = {
+    grid: {
+      top: '15%',
+      bottom: '15%',
+      left: '10%',
+      right: '5%'
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line',
+        areaStyle: {}
+      }
+    ],
+    color: '#5e7ce0'
+  };
 
-  constructor(
-    private dialogService: DialogService,
-    private ChangeModalService: ChangeModalService,
-  ) { }
+  constructor(private dialogService: DialogService) { }
 
   @Input() eWidth: number = 0;
   @Input() eHeight: number = 0;
@@ -35,20 +63,10 @@ export class CustomChartComponent implements OnInit {
   @Input() isAdd: boolean = false;
   @Input() changeDataIndex: number = 0;
 
-  ngOnInit(): void {
-    // 修改表格数据
-    // TODO 此种方式会初始化多次导致弹窗多次
-    /* this.ChangeModalService.getData().subscribe(value => {
-      this.chartNum = value;
-      if (value !== undefined) {
-        this.openChangeData()
-      }
-    }) */
-  }
+  ngOnInit(): void { }
 
   ngOnChanges(change) {
     // 如果是点击了修改数据源则重新选择数据源
-    // TODO 此种方式会因为改变同一表格数据源时index值不变导致失效
     if (change.changeDataIndex && change.changeDataIndex.currentValue === this.index) {
       this.openChangeData();
     }
@@ -62,7 +80,7 @@ export class CustomChartComponent implements OnInit {
     }
     // 获取状态，是否为新添加的模块
     if ((change.eWidth || change.eHeight) && change.isAdd) {
-      this.isNew = change.isAdd.currentValue;
+      this.isNewModule = change.isAdd.currentValue;
     }
     // 重新渲染图表
     if ((change.eWidth && change.eWidth.currentValue) || (change.eHeight && change.eHeight.currentValue)) {
@@ -79,49 +97,30 @@ export class CustomChartComponent implements OnInit {
     const divWrap = <HTMLElement>document.getElementsByClassName('center')[this.index];
     divWrap.style.width = this.cWidth;
     divWrap.style.height = this.cHeight;
-    if (!this.isNew) {
-      // 未进行添加操作，此时是初始化展示页面或选择数据源，渲染图表
-      // 获取图表容器，此时进行的时图表初始化渲染
+    if (!this.isNewModule) {
+      // 获取图表容器，此容器为图表初始化显示或修改数据源的容器
       let eWrap = <HTMLElement>document.getElementsByClassName('lineChart')[this.index];
-      if (!eWrap && this.isShowNew) {
+      // 获取图表容器，此容器为对没有数据源的模块第一次选择数据源的容器
+      let nWrap = <HTMLElement>document.getElementsByClassName('newChart')[this.index];
+      if (eWrap) {
+        // 如果eWrap存在，则清除nWrap的宽高，防止占据多余空间
+        nWrap.style.width = '0';
+        nWrap.style.height = '0';
+      } else {
         // 获取图表容器，此时进行的是选择新数据源后图表的渲染
-        eWrap = <HTMLElement>document.getElementsByClassName('newLineChart')[this.index];
+        eWrap = nWrap;
       }
       eWrap.style.width = this.cWidth;
       eWrap.style.height = this.cHeight;
       const ec = echarts as any;
       const lineChart = ec.init(eWrap);
       this.instanceChart = lineChart;
-      const lineChartOption = {
-        grid: {
-          top: '15%',
-          bottom: '15%',
-          left: '10%',
-          right: '5%'
-        },
-        xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [
-          {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line',
-            areaStyle: {}
-          }
-        ]
-      };
       this.instanceChart.resize({
         width: 'auto',
         height: 'auto'
       })
-      lineChart.setOption(lineChartOption);
+      lineChart.setOption(this.chartOptions);
     } else {
-      // 进行添加操作，展示选择数据源按钮
       this.showBtn = true;
     }
   }
@@ -133,7 +132,7 @@ export class CustomChartComponent implements OnInit {
       width: '346px',
       maxHeight: '600px',
       title: '选择数据源',
-      content: '',
+      contentTemplate: this.changeDataModal,
       backdropCloseable: true,
       dialogtype: dialogtype,
       onClose: () => { },
@@ -143,9 +142,21 @@ export class CustomChartComponent implements OnInit {
           text: '确定',
           disabled: false,
           handler: ($event: Event) => {
+            // 如果不是新添加的图表，则移除echarts实例
+            if (this.isNewModule === false) {
+              this.instanceChart.dispose();
+            }
+            // 模拟修改数据源
+            if (this.selectType === '图表1') {
+              this.chartOptions.color = '#5e7ce0';
+            } else if (this.selectType === '图表2') {
+              this.chartOptions.color = 'red';
+            } else {
+              this.chartOptions.color = 'yellow';
+            }
             this.showBtn = false;
-            this.isNew = false;
-            this.isShowNew = true;
+            this.isNewModule = false;
+            this.isNewChart = true;
             this.initPages();
             results.modalInstance.hide();
           },
