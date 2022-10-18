@@ -19,28 +19,18 @@ export class SampleComponent implements OnInit, AfterViewInit {
   // 插件抽屉数据
   selectList = [
     {
-      name: '超长会话',
-      value: 'sessionTime>=7200000',
+      name: '条件1',
+      value: 'num>=1',
       check: false
     },
     {
-      name: '请求流量大于响应流量',
-      value: 'bytes.in>bytes.out',
+      name: '条件2',
+      value: 'num>2',
       check: false
     },
     {
-      name: '外联流量大于内联流量',
-      value: 'bytes.out>bytes.in',
-      check: false
-    },
-    {
-      name: '80端口非HTTP协议',
-      value: 'port==80&&proto.appProto!=HTTP',
-      check: false
-    },
-    {
-      name: '连入流量等于连出流量',
-      value: 'bytes.in==bytes.out',
+      name: '条件3',
+      value: 'num>3',
       check: false
     }
   ];
